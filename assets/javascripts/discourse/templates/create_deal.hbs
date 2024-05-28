@@ -1,0 +1,61 @@
+<h1>Create Deal</h1>
+
+
+
+<form method="post" action="/create_deal.json">
+<input type="hidden" class="cstm_cls" name="authenticity_token" value="form_authenticity_token">
+
+
+  <label>
+    Deal Name
+   
+  </label>
+  
+  <div>
+   
+   <input type="text" name="title" class="ember-text-field ember-view" placeholder="Deal Name">
+
+  </div>
+  
+  <label>
+    {{ i18n 'notebook.seller_description.text_field_label' }}
+    
+  </label>
+  
+  <input type="hidden" name="seller_id" class="seler_id" />
+  <input type="hidden" name="seller_topic_hidden" class="seler_topic_id" />
+  <div>
+
+   <textarea class="ember-text-field ember-view" name="description" placeholder="Deal Description"></textarea>
+
+  </div>
+  <br/>
+  <div>
+
+  <button type='submit' class='btn btn-primary'>
+    {{ i18n 'notebook.create_note.submit_label' }}
+  </button>
+  </div>
+</form>
+
+<script type="text/discourse-plugin" version="0.9">
+const currentUser = Discourse.User.current();
+    console.log("dd");
+
+if (currentUser && currentUser.username) {
+	var userid = currentUser.id;
+	console.log("ggg"+userid);
+	$(".seler_id").val(userid);
+}
+
+</script>
+
+<script>
+var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
+
+// Use the CSRF token as needed
+console.log("ccc"+csrfToken);
+$(".cstm_cls").val(csrfToken);
+</script>

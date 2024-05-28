@@ -1,0 +1,144 @@
+<div class="wrapper">
+    <section class="deal_sec">
+        <div class="container">
+            <div class="row">
+                <div class="sb_tog_btns">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <h3>Seller Dashboard</h3>
+                        </div>
+                    </nav>
+                </div>
+                <div class="sb_List_tables">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane active show" id="nav-seller" role="tabpanel" aria-labelledby="nav-seller-tab">
+                            
+                            <div class="container table-responsive seller-table"> 
+                                <table class="table table-bordered table-hover table-seller_dashboard">
+                                  <thead class="thead-dark">
+                                    <tr>
+                                      <th scope="col">Topic Name</th>
+									  <th scope="col">Seller Name</th>
+                                      <th scope="col">Request Message</th>
+                                      <th scope="col">Status</th>
+                                      <th scope="col">Send Time</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    
+                                  </tbody>
+                                </table>
+								<div id="loader" class="loader" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-buyer" role="tabpanel" aria-labelledby="nav-buyer-tab">
+                            <div class="add_new_btn">
+                                <!-- <a href="#"><button class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABxSURBVHgB7ZXdCcAgDISTTuIm7SgZxVE6SruJm6QRUigFJf68CPkgcg/JiXIQACPMTLlgJmr6QpaZDWyEgh42bsaNFzbGfGg2Q6VvlzpUX1J3pTch4vkP/yxowa+wIBfHzzOjZcZz7Mb9xqmgx2ldpg8ZRpGjh3wiWwAAAABJRU5ErkJggg==" alt="add_icon"> Add New</button></a> -->
+                            </div>
+                            <div class="container table-responsive buyer-table"> 
+                                <table class="table table-bordered table-hover">
+                                  <thead class="thead-dark">
+                                    <tr>
+                                      <th scope="col">S.No.</th>
+                                      <th scope="col">Deal Name</th>
+                                      <th scope="col">Deal Time Left</th>
+                                      <th scope="col">Status</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td>Deal One</td>
+                                      <td>5:30:22</td>
+                                      <td class="in_stock">In Stock</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Deal Two</td>
+                                        <td>15:30:22</td>
+                                        <td class="out_stock">Out of Stock</td>
+                                      </tr>
+                                    <tr>
+                                      <th scope="row">3</th>
+                                      <td>Deal Three</td>
+                                      <td>1:00:20</td>
+                                      <td class="out_stock">Out of Stock</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>Deal Three</td>
+                                        <td>5:00:02</td>
+                                        <td class="In_stock">In Stock</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row">4</th>
+                                        <td>Deal Three</td>
+                                        <td>00:50:22</td>
+                                        <td class="In_stock">In Stock</td>
+                                      </tr>
+                                  </tbody>
+                                </table>
+								
+								
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+  
+  <script>
+	
+		$(document).ready(function() {
+			var currentUser = Discourse.User.current();
+			var userid = currentUser.id;
+			console.log('userid= ' + userid);
+			var previousData = "";
+			var offset = 0;
+			var limit = 5;
+	
+			function loadMoreData_seller(offset, limit) {
+				$('.loader').show();
+				$.ajax({
+					url: 'https://leadforest.net/do_not_delete/new_deal_discourse/getData_seller.php',
+					method: 'GET',
+					dataType: 'html',
+					data: { userid: userid, offset: offset, limit: limit },
+					cache: false,
+					success: function(response) {
+						$('.loader').hide();
+						// previousData = $('.new-dashboard').html();
+						// $('.new-dashboard').empty();
+						
+						$('.table-seller_dashboard tbody').append(response);
+						
+						var tempDiv = $('<div>').html(response);
+						var numberOfRows = tempDiv.find('tr').length;
+
+						if ((numberOfRows) < limit) {
+							$('#loadMoreBtnSeller').hide(); 
+						} else {
+							$('#loadMoreBtnSeller').show();
+						}
+							
+						console.log('Number of rows loaded:------- ', numberOfRows); 
+					},
+					error: function(xhr, status, error) {
+						console.error('Error fetching data:', error);
+						 $('.loader').hide();
+					}
+				});
+			}
+			
+			loadMoreData_seller(offset, limit);
+
+			$('#loadMoreBtnSeller').click(function() {
+				offset += limit;
+				loadMoreData_seller(offset, limit);
+				 $('.loader').hide();
+			});
+		});
+
+  </script>

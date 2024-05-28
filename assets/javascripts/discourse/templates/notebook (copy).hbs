@@ -1,0 +1,17 @@
+<h1>{{ i18n 'notebook.title' }}</h1>
+
+<form method="get" action="/seller">
+  <label>
+    {{ i18n 'notebook.create_note.text_field_label' }}
+    {{ input name='title' value=title }}
+  </label>
+  
+  <label>
+    {{ i18n 'notebook.create_note2.text_field_label' }}
+    {{ textarea name='description' value=description }}
+  </label>
+
+  <button type='submit' class='btn btn-primary'>
+    {{ i18n 'notebook.create_note.submit_label' }}
+  </button>
+</form>

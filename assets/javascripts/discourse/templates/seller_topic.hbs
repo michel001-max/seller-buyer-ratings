@@ -1,0 +1,94 @@
+<div class="wrapper">
+   <section class="deal_sec">
+      <div class="container">
+         <div class="row">
+            <div class="sb_tog_btns">
+               <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                     <h3>Seller Topics</h3>
+                  </div>
+               </nav>
+            </div>
+            <div class="sb_List_tables">
+               <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane active show" id="nav-buyer" role="tabpanel" aria-labelledby="nav-buyer-tab">
+                     <div class="container table-responsive buyer-table">
+                        <table class="table table-bordered table-hover cstm_buyer">
+                           <thead class="thead-dark">
+							<tr>
+								<td>Name</td>
+								<td>Description</td>
+								<td>Seller Id</td>
+								<td>Creation Date</td>
+								<td>Deal</td>
+							</tr>
+						   </thead>
+                           <tbody class="tbody_seller">
+								
+						   </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+
+<script>
+$.ajax({
+    url: 'http://localhost:4201/get_seller_topic.json',
+    dataType: 'json',
+    success: function(jsonData) {
+        // This function will be called upon successful retrieval of data
+        console.log(jsonData); // Output the data to console (you can manipulate it as needed)
+		if (jsonData && jsonData.length > 0) {
+			// Loop through each item in the JSON data
+			
+			$.each(jsonData, function(index, item) {
+				// Access each property of the item
+				
+				//console.log("Name: " + item.name);
+				//console.log("Description: " + item.description);
+				//console.log("Seller ID: " + item.seller_id);
+				//console.log("Created At: " + item.created_at);
+				//console.log("Updated At: " + item.updated_at);
+				var timestamp = item.created_at; // Example timestamp value in milliseconds
+
+				// Convert timestamp to a Date object
+				var date = new Date(timestamp);
+
+				// Format the date as desired
+				var formattedDate = date.toLocaleDateString(); // Adjust format as needed
+				var data = "<td>"+item.name+"</td>";
+				data += "<td>"+item.description+"</td>";
+				data += "<td>"+item.seller_id+"</td>";
+				data += "<td>"+formattedDate+"</td>";
+				data += "<td><a href='create_deal?seller_id="+item.seller_id+"'>Create Deal</td>";
+				
+				$(".tbody_seller").append("<tr>"+data+"</tr>");
+			});
+		} else {
+			console.log("No JSON data available or JSON data is empty.");
+		}
+    },
+    error: function(xhr, status, error) {
+        // This function will be called if an error occurs during the AJAX request
+        console.error(status, error);
+    }
+	
+});
+</script>
+
+<script type="text/discourse-plugin" version="0.7">
+const currentUser = Discourse.User.current();
+    console.log("dd");
+
+if (currentUser && currentUser.username) {
+	var userid = currentUser.id;
+	console.log("ggg"+userid);
+	$(".seler_id").val(userid);
+}
+
+</script>

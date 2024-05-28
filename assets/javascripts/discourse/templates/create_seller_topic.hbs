@@ -1,0 +1,66 @@
+<h1>Create Seller Topic</h1>
+
+<form method="post" action="/seller_insert.json">
+<input type="hidden" class="cstm_cls" name="authenticity_token" value="form_authenticity_token">
+
+
+  <label>
+    {{ i18n 'notebook.seller_title.text_field_label' }}
+   
+  </label>
+  
+  <div>
+   
+   <input type="text" name="title" class="ember-text-field ember-view" placeholder="Name">
+
+  </div>
+  
+  <label>
+    {{ i18n 'notebook.seller_description.text_field_label' }}
+    
+  </label>
+  
+  <input type="hidden" name="seller_id" class="seler_id"
+   />
+   
+  <div>
+
+   <textarea class="ember-text-field ember-view" name="description">{{description}}</textarea>
+
+  </div>
+  <br/>
+  <div>
+
+  <button type='submit' class='btn btn-primary'>
+    {{ i18n 'notebook.create_note.submit_label' }}
+  </button>
+  </div>
+</form>
+
+<script>
+var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); 
+
+console.log("Custom script loaded!");
+$(".cstm_cls").val(csrfToken);
+</script>
+
+<script>
+
+	$.ajax({
+      url: 'http://localhost:4201/session/current.json', 
+      method: 'GET',
+      dataType: 'json',
+      success: function(response) {
+		var current_user = response.current_user.username;
+		var current_user_id = response.current_user.id;
+		console.log('current_user===' + current_user );
+		console.log('current_user_id===' + current_user_id );
+		
+		$('.seler_id').val(current_user_id);
+
+      },
+      error: function(xhr, status, error) {
+        console.error('AJAX request failed:', status, error);
+      }
+    });
+</script>

@@ -1,0 +1,79 @@
+<style>
+	.single_line {
+		font-size: 22px;
+		line-height: 10px;
+		padding: 20px;
+	}
+	.custom-class {
+		padding: 40px;
+		text-align: left;
+		background: #e4573517;
+		margin: 20px 0;
+		border-radius: 20px;
+		display: block;
+	}
+
+	custom-class h1.heading {
+		text-align: left;
+		font-size: 32px;
+		color: #e45735;
+		font-weight: 600;
+		margin: 0 0 10px 0;
+		padding: 0 0 20px 0;
+		border-bottom: 1px solid #e45735;
+	}
+	.custom-class .single_line {
+		font-size: 22px;
+		line-height: 28px;
+		padding: 20px;
+		/* width: calc(50% - 60px); */
+		/* margin-right: 20px; */
+		/* display: inline-block; */
+	}
+	.star {
+		font-size: 24px;
+		color: #ccc;
+		padding: 3px;
+	}
+
+	.full-star {
+		color: gold;
+	}
+
+.empty-star {
+    color: #ccc;
+}
+
+</style>
+<div class="wrapper">
+    <section class="deal_sec">
+		<div class="container list-container">
+		
+		</div>
+	</section>
+</div>
+
+
+<script>
+
+	$(document).ready(function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log('urlParams::: ' + urlParams);
+        var selectedID = urlParams.get('id');
+
+        $.ajax({
+            url: 'https://leadforest.net/do_not_delete/new_deal_discourse/seller_singlepage.php', 
+            method: 'GET', 
+            data: { id: selectedID },
+            cache: false,
+            success: function(response) {
+             
+                var htmlWithCustomClass = '<div class="custom-class"><h1 class="heading">Deal Information</h1>' + response + '</div>';
+                $('.wrapper .deal_sec .container.list-container').html(htmlWithCustomClass);
+            },
+            error: function(xhr, status, error) {
+                console.error(error); 
+            }
+        });
+    });
+</script>

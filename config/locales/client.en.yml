@@ -1,0 +1,20 @@
+en:
+  js:
+    notebook:
+      title: 'Notebook'
+
+      create_note:
+        text_field_label: 'New note:'
+        submit_label: 'Save'
+        
+      create_note2:
+        text_field_label: 'New note 2:'
+        
+      seller_title:
+        text_field_label: 'Name'
+        
+      seller_description:
+        text_field_label: 'Description'
+
+
+      delete_note_label: 'Delete'
